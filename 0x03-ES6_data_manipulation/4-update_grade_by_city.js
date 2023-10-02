@@ -1,13 +1,15 @@
-export default function updateStudentGradeByCity(array, city, newGrades) {
-    const gradeid = {};
-    newGrades.forEach((grade) => {
+export default function updateStudentGradeByCity(
+  listStudents,
+  city,
+  newGrades,
+) {
+  return listStudents
+    .filter((student) => student.location === city)
+    .map((student) => {
+      const [grade] = newGrades.filter(
+        (gradeData) => gradeData.studentId === student.id,
+      );
 
-	gradeid[grade.studentId] = grade.grade;
+      return { ...student, grade: grade ? grade.grade : 'N/A' };
     });
-
-    const updatedArray = array.map((student) => ({...student, grade: gradeid[student.id] || 'NA'
-
-
-						 }));
-    return updatedArray;
 }
